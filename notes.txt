@@ -1,0 +1,101 @@
+These are my notes for libft:
+
+##memset.c function:
+for void *: is a void pointer that has no associated data type with it, it can hold the adress of any type and can be typecasted to any type:
+https://www.geeksforgeeks.org/void-pointer-c-cpp/
+int a = 10;
+char b = 'x';
+
+void *p = &a; // void pointer holds address of int 'a'
+p = &b; // void pointer holds address of char 'b'
+
+for memset function:
+https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
+
+//the free error when try to free the mallocin the main()
+https://stackoverflow.com/questions/20297524/c-free-invalid-pointer
+Actually, I did my var in the main() so it's auto in the stack so no nead to free or malloc
+when declaring a variable and use malloc like this:
+https://stackoverflow.com/questions/21061796/malloc-works-without-type-cast-before-malloc-c-c
+
+char *ptr;
+ptr = malloc(sizeof(char)*N);
+ptr will point to an integer array, there is no need to cast.
+
+//segumentation fault error:
+I was getting SFT when running the code without srtrcpy:
+#include "libft.h"
+
+void	*ft_memset(void *str, int c, size_t n)
+{
+	char *s;
+
+	s = str;
+	while (n--)
+	{
+		*s++ = c;
+		s++;
+		n--;
+	}
+	return (s);
+
+}
+
+int	main()
+{
+	char *str;
+	str = malloc(sizeof(char)*50);
+	strcpy(str,"hello my name is fatima");
+	memset(str, 'a', 3);
+	puts(str);
+}
+
+I was writing:
+int	main()
+{
+	char *str;
+	str = malloc(sizeof(char)*50);
+	str = "hello my name is fatima";
+	memset(str, 'a', 3);
+	puts(str);
+}
+
+But that is a mistake, always copy the string in the str. that why also I was getting the free() error when using it:
+
+e3r2p1% gcc ft_memset.c && ./a.out
+zsh: segmentation fault (core dumped)  ./a.out
+
+and :
+
+e3r2p1% gcc ft_memset.c && ./a.out
+hello my name is fatima
+free(): invalid pointer
+
+zsh: IOT instruction (core dumped)  ./a.out
+
+Now, the code recognize the string allocated space. and free it.
+the final code: 
+#include "libft.h"
+
+void	*ft_memset(void *str, int c, size_t n)
+{
+	char *s;
+
+	s = str;
+	while (n--)
+		*(s++) = c;
+	return (s);
+
+}
+
+int	main()
+{
+	char *str;
+	str = malloc(sizeof(char)*50);
+	strcpy(str,"hello my name is fatima");
+	ft_memset(str, '*', 10);
+	printf("%s\n",str);
+	free(str);
+}
+
+
