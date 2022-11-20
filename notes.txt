@@ -98,4 +98,151 @@ int	main()
 	free(str);
 }
 
+//ft_bzero.fr
+What I learn is, we can cast the same string without the need of creating a copy of the void * and cast it to string as we did to the previous memset function, we can just do:
+
+#include "libft.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	while(n--)
+		*((char *) s++) = '\0';
+}
+
+
+void	*ft_test(void *s, size_t n)
+{
+	while(n--)
+		*((char *) s++) = 'a';
+	return (s);
+}
+int	main()
+{
+	char str[50];
+	strcpy(str,"hello mt namem ek");
+	//bzero(str,4);
+	//printf("%s", str + 3);
+	ft_test(str, 3);
+	printf("%s", str);
+
+}
+
+With using *((char *)s++) it's like *(s++), where s is (char *)s, to convert it to string.
+
+##ft_memcpy.c
+Pay attention, if we declare a const variable we don't cpy smt to it.
+
+##ft_memmove.c
+
+The diff between memcopy.c and memmove.c is:
+
+memcpy() simply copies data one by one from one location to another. On the other hand memmove() copies the data first to an intermediate buffer, then from the buffer to destination.
+memcpy() leads to problems when strings overlap.
+//an example of overlaping:
+https://www.geeksforgeeks.org/memmove-in-cc/
+
+Sample program to show that memcpy() can lose data.
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    char csrc[100] = "Geeksfor";
+    memcpy(csrc + 5, csrc, strlen(csrc) + 1);
+    printf("%s", csrc);
+    return 0;
+}
+Output: GeeksGeeksfor
+//wow finally I figured out the problem of ovrlaping in the ft_memcpy:
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t i = 0;
+	while (i < n)
+	{
+		((unsigned char *) dest) [i]  = ((unsigned char *) src)[i];
+		i++;
+	}
+	return (dest);
+}
+
+or this 
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t i = 0;
+	while (n--)
+	{
+		*((unsigned char *) dest++)  = *((unsigned char *) src++);
+	
+	}
+	return (dest);
+}
+
+
+WILL NOT consider the overlaping problem like the built in function, for the example of src + 5 above!!!
+ there for, we use:
+
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t i = 0;
+	while (n--)
+	{
+		((unsigned char *) dest) [n]  = ((unsigned char *) src)[n];
+	
+	}
+	return (dest);
+}
+int main()
+{
+	char str[50];
+	strcpy(str, "hello there whs");
+	char dest[50];
+	strcpy(dest, "gee");
+	ft_memcpy(str + 5,str,14);
+	printf("%s", str);
+
+}
+
+I still figuring out while when doing in backwards it affecting the result instead of the normal iteration.
+
+The memcpy copy function shows undefined behavior if the memory regions pointed to by the source and destination pointers overlap. The memmove function has the defined behavior in case of overlapping. So whenever in doubt, it is safer to use memmove in place of memcpy.
+
+
+In in memmove, it does not cross the same bytes but replace it from the beginning when copying:
+
+the result is
+
+memcpy overlap : GeeksforGeeksforhe
+ Geeksforhe
+memmove overlap : GeeksforGeeksforGe
+ GeeksforGe
+
+of:
+int main()
+{
+	char str[100] = "GeeksforheywasupP";
+	char *first, *second;
+	first = str;
+	second = str;
+	printf("Original string :%s\n ", str);
+	printf("%s\n", second + 8);
+	printf("%s\n", first + 8);
+
+	// when overlap happens then it just ignore it
+	memcpy(first + 8, first, 10);
+	printf("memcpy overlap : %s\n ", first);
+	printf("%s\n", first + 8);
+
+	// when overlap it start from first position
+	memmove(second + 8, first, 10);
+	printf("memmove overlap : %s\n ",second);
+	printf("%s\n", second + 8);
+
+
+	return 0;
+}
+https://www.geeksforgeeks.org/memmove-in-cc/ 
+https://stackoverflow.com/questions/4415910/memcpy-vs-memmove
+
+
 
