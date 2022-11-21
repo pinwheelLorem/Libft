@@ -38,7 +38,8 @@ void	*ft_memset(void *str, int c, size_t n)
 		n--;
 	}
 	return (s);
-
+let g:user42 = 'fgabri'
+let g:mail42 = 'fgabri@student.42.fr'
 }
 
 int	main()
@@ -244,5 +245,68 @@ int main()
 https://www.geeksforgeeks.org/memmove-in-cc/ 
 https://stackoverflow.com/questions/4415910/memcpy-vs-memmove
 
+https://stackoverflow.com/questions/35014525/comparing-strings-with-or-operators-c
 
+str1 > str2 does not compare the strings either, and while it does "compare their addresses" on many platforms, strictly speaking it is undefined behaviour
+
+the < operator in strings, compare their adresses. so it this case we will compare both the  adress of src amd dest and see if we can come up with a solution:
+the pb here is overlaping (chevauchement d'adresse) base on this
+
+
+//The first version of the solution is:
+
+void	*ft_memmove_version2(void *dest, const void *src, size_t n)
+{
+	unsigned char dests[300];
+	memcpy(dests,src,n);
+	memcpy(dest,dests,n);
+	return (dest);
+}
+
+here we give maximum bytes to the unsigned char, but we can deal with it without the need of giving it bytes.
+ALGO of 2nd version of memmove:
+
+//Now we'll compare adress f the two problematic string: str + 8 and str, and based on this we'll write our function.
+the diff of two adresses :  !!!!! PLZ BE AWARE THIS METHOD DISPLAY WARINING !!!!
+https://stackoverflow.com/questions/12849588/getting-the-difference-between-two-memory-addresses
+
+Two ways of getting a string's adress:
+
+int *str_addr = &str;
+printf("%p\n", str_addr);
+printf("the adress of str is %p", str);
+
+using a pointer to integer and & operator allows us to know the diff between two adresses:
+
+//A great explanation of the diff between 
+
+https://stackoverflow.com/questions/1201319/what-is-the-difference-between-memmove-and-memcpy#:~:text=With%20memcpy%20%2C%20the%20destination%20cannot,addresses%20from%20low%20to%20high.
+
+
+void memmove ( void * dst, const void * src, size_t count ) {
+    if ((uintptr_t)src < (uintptr_t)dst) {
+        // Copy from back to front
+
+    } else if ((uintptr_t)dst < (uintptr_t)src) {
+        // Copy from front to back
+    }
+}
+
+void memcpy ( void * dst, const void * src, size_t count ) {
+    if ((uintptr_t)src != (uintptr_t)dst) {
+        // Copy in any way you want
+    }
+}
+
+And this should pretty well explain the difference. memmove always copies in such a way, that it is still safe if src and dst overlap, whereas memcpy just doesn't care as the documentation says when using memcpy, the two memory areas must not overlap.
+
+
+
+//strlcpy function, we use the include:
+
+https://stackoverflow.com/questions/59943556/bsd-string-h-for-windows
+
+We need to include the header: #include <bsd/string.h> 
+and link when running the code:
+gcc ft_strlcpy.c -lbsd && ./a.out
 
