@@ -302,6 +302,7 @@ And this should pretty well explain the difference. memmove always copies in suc
 
 
 
+
 //strlcpy function, we use the include:
 
 https://stackoverflow.com/questions/59943556/bsd-string-h-for-windows
@@ -309,4 +310,98 @@ https://stackoverflow.com/questions/59943556/bsd-string-h-for-windows
 We need to include the header: #include <bsd/string.h> 
 and link when running the code:
 gcc ft_strlcpy.c -lbsd && ./a.out
+	int long		n;
 
+##ft_strnstr.c
+It is similar to strchr, except that it searches for string ‘search term’ instead of a single char
+
+
+##f_strjoin.c
+PAY ATTENTION: an empty string "" different from NULL. 
+
+##ft_split.c
+Please note that static variable are store in the data segment not in the stack the gave a propoeerty of preserving their value even after they are out of their scopei. The static variables are stored in the data segment of the memory. The data segment is a part of the virtual address space of a program.
+
+Unlike global functions in C, access to static functions is restricted to the file where they are declared. Therefore, when we want to restrict access to functions, we make them static. Another reason for making functions static can be reuse of the same function name in other files
+https://www.geeksforgeeks.org/what-are-static-functions-in-c/
+
+##ft_itoa.c
+
+I tired to do this:
+#include "libft.h"
+
+static size_t	ft_len_int(long int n, long int *q)
+{
+	size_t	count;
+	size_t d;
+
+	count = 1;
+	if (n < 9)
+		return (1);
+	while (n >= 10)	
+	{
+		count++;
+		n /= 10;
+	}
+	d = count;
+	while (--d)
+		*q *= 10;
+	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	t;
+	size_t	i;
+	int	sign;
+	long int	q;
+	long int	m;
+	char *s;
+
+	m = (long int)n;
+	i = 0;
+	q = 1;
+	t = ft_len_int(m, &q);
+
+	s = (char *)malloc(sizeof(char) * (t+1));
+	if (!s)
+		return (NULL);
+	while (i < t)
+	{
+		s[i] = n / q + '0';
+		n %= q;
+		q /= 10;
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
+}
+
+int main()
+{
+	long int n = 18293894;
+	char *s;
+
+	s = ft_itoa(n);
+	printf("the s is %s\n",s);
+	printf("th elen of s is %ld\n", ft_strlen(s));
+	
+}
+It worked for positiv case, the iteration was from front to back, now we'll try to fill the string from back to front. 
+
+to check for errors in memory we type:
+
+e3r7p1% valgrind -s --leak-check=full ./a.out
+==2101519== Memcheck, a memory error detector
+==2101519== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2101519== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2101519== Command: ./a.out
+==2101519== 
+==2101519== Conditional jump or move depends on uninitialised value(s)
+==2101519==    at 0x484ED88: __strlen_sse2 (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2101519==    by 0x48EBDB0: __vfprintf_internal (vfprintf-internal.c:1517)
+==2101519==    by 0x48D581E: printf (printf.c:33)
+==2101519==    by 0x10932B: main (ft_strdup.c:37)
+
+The error here is the null terminator in strdup string.
+https://stackoverflow.com/questions/42233936/why-is-valgrind-complaining-about-printf-instead-of-my-uninitialized-counter
