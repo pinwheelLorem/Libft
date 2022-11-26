@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 20:13:24 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/26 02:58:48 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/26 01:24:29 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/26 01:26:33 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	n;
-
-	n = 0;
-	while (*(s++))
-		n++;
-	return (n);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

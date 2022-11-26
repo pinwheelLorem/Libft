@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 20:13:24 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/26 02:58:48 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/25 23:47:41 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/26 00:22:11 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_strteri(char *s, void (*f)(unsigned int, char*))
 {
-	size_t	n;
+	unsigned int	i;
 
-	n = 0;
-	while (*(s++))
-		n++;
-	return (n);
+	i = 0;
+	if (!s || !f)
+		return ;
+	while (*s)
+		f(i++, s++);
 }
+/*
+static void	ft_test(unsigned int i, char *s)
+{
+	if (i%2)
+		(*s)++;
+	else
+		(*s)--;
+
+}
+
+int main()
+{
+	char s[100] = "hello there";
+	ft_strteri(s,ft_test);
+	printf("%s\n", s);
+}*/

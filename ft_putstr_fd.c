@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 20:13:24 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/26 02:58:48 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/26 00:33:45 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/26 05:06:41 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_putstr_fd(char *s, int fd)
 {
-	size_t	n;
-
-	n = 0;
-	while (*(s++))
-		n++;
-	return (n);
+	write(fd, s, ft_strlen(s));
 }
+
+/*
+#include <fcntl.h>
+int main()
+{
+//	extern	FILE *fd;
+//	fd =  fopen("../test.txt","w");
+	int fd = open("te.txt",  O_WRONLY | O_CREAT);
+	ft_putstr_fd("hello", fd);
+
+}*/

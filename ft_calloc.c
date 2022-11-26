@@ -6,7 +6,7 @@
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 04:32:20 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/24 11:15:54 by fgabri           ###   ########.fr       */
+/*   Updated: 2022/11/26 05:15:11 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	*ft_calloc(size_t n, size_t size)
 
 	p = n * size;
 	s = (void *)malloc(p);
-	if (!s)
-		return (NULL);
-	ft_bzero(s, p);
+	if (s)
+		ft_bzero(s, p);
 	return (s);
 }
 

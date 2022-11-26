@@ -294,7 +294,16 @@ void memmove ( void * dst, const void * src, size_t count ) {
 
 void memcpy ( void * dst, const void * src, size_t count ) {
     if ((uintptr_t)src != (uintptr_t)dst) {
-        // Copy in any way you want
+        // Copy in 
+#include <fcntl.h>
+int main()
+{
+//	extern	FILE *fd;
+//	fd =  fopen("../test.txt","w");
+	int fd = open("te.txt",  O_WRONLY | O_CREAT);
+	ft_putstr_fd("hello", fd);
+
+}any way you want
     }
 }
 
@@ -405,3 +414,42 @@ e3r7p1% valgrind -s --leak-check=full ./a.out
 
 The error here is the null terminator in strdup string.
 https://stackoverflow.com/questions/42233936/why-is-valgrind-complaining-about-printf-instead-of-my-uninitialized-counter
+
+##ft_putchar_fd
+
+to write a character in a file we use the write function like this:
+write(fd, &c, 1);
+the number that it's giving to a file it's called file descriptor: 0 for stdin, 1 stdout, 2 for stderr
+https://bottomupcs.com/ch01s03.html
+https://www.geeksforgeeks.org/input-output-system-calls-c-create-open-close-read-write/#:~:text=What%20is%20the%20File%20Descriptor,pointers%20to%20file%20table%20entries.
+#include "libft.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	write(fd, s, ft_strlen(s));
+}
+
+
+#include <fcntl.h>
+int main()
+{
+//	extern	FILE *fd;
+//	fd =  fopen("../test.txt","w");
+	int fd = open("te.txt",  O_WRONLY | O_CREAT);
+	ft_putstr_fd("hello", fd);
+
+}
+
+This code, oepn a file in write and create more using the open() function with the file descriptorand then use the function to write the s in the file.
+
+##DEBUGGING:
+
+The -g switch tells the compiler
+to record the line numbers
+against the code it compiles.
+
+
+## if we want to  put your archive somewhere else, like /my_lib In that case, we will need to use the -L option to say which directories to search gcc test_code.c -L/my_lib -lhfsecurity -o test_code
+
+gcc ft_putstr_fd.c -L . -lft -o hi
+

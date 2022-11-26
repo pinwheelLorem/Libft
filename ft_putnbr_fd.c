@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 20:13:24 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/26 02:58:48 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/26 01:26:57 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/26 01:48:26 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t	n;
+	unsigned int	m;
 
-	n = 0;
-	while (*(s++))
-		n++;
-	return (n);
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		m = -n;
+	}
+	else
+		m = n;
+	if (m > 9)
+	{
+		ft_putnbr_fd(m / 10, fd);
+		m %= 10;
+	}
+	ft_putchar_fd(m + '0', fd);
 }
+/*
+#include <fcntl.h>
+int main()
+{
+//	extern	FILE *fd;
+//	fd =  fopen("../test.txt","w");
+	int fd = open("te.txt",  O_WRONLY | O_CREAT);
+	ft_putnbr_fd(-56273892, fd);
+
+} */
