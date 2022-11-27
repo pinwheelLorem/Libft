@@ -1,40 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 04:32:20 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/27 20:21:03 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/27 19:35:18 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/27 20:49:22 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t n, size_t size)
+t_list	*ft_lstnew(void *content)
 {
-	size_t	p;
-	void	*s;
+	t_list	*s;
 
-	p = n * size;
-	if (!n || !p)
-		return (ft_calloc(1, 1));
-	if ((p / n) != size)
-		return (NULL);
-	s = (void *)malloc(p);
+	s = (t_list *)malloc(sizeof(t_list));
 	if (!s)
 		return (NULL);
-	ft_bzero(s, p);
+	s->content = content;
+	s->next = NULL;
 	return (s);
 }
-
 /*
-int main()
+static void	ft_display(t_list *s)
 {
+	while (s != NULL)
+	{
+		printf("%d\n", *(int *)s->content);
+		s = s->next;
+	}
+}
 
-	int *a= ft_calloc(3,sizeof(int));
-	a[0] = 1;
-	a[1] = 3;
-	free(a);
+int main() 
+{
+	t_list *N;
+	int a = 42;
+	void *p = &a;
+	N = ft_lstnew(p);
+	ft_display(N);
+	free(N);
 }*/

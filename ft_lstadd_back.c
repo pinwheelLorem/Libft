@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 04:32:20 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/27 20:21:03 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/27 22:53:11 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/27 23:48:20 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t n, size_t size)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	size_t	p;
-	void	*s;
-
-	p = n * size;
-	if (!n || !p)
-		return (ft_calloc(1, 1));
-	if ((p / n) != size)
-		return (NULL);
-	s = (void *)malloc(p);
-	if (!s)
-		return (NULL);
-	ft_bzero(s, p);
-	return (s);
+	if (new == NULL)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+		ft_lstlast(*lst)->next = new;
 }
-
 /*
-int main()
+void    ft_lstadd_back(t_list **lst, t_list *new)
 {
-
-	int *a= ft_calloc(3,sizeof(int));
-	a[0] = 1;
-	a[1] = 3;
-	free(a);
+	if (!new) This method sucks in the 6 7 8 th tests idk why?!
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		while ((*lst)->next != NULL)
+			*lst = (*lst)->next;
+		(*lst)->next = new;
+	}
 }*/

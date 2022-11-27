@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 04:32:20 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/27 20:21:03 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/27 22:08:51 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/27 22:12:00 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t n, size_t size)
+int	ft_lstsize(t_list *lst)
 {
-	size_t	p;
-	void	*s;
+	int	count;
 
-	p = n * size;
-	if (!n || !p)
-		return (ft_calloc(1, 1));
-	if ((p / n) != size)
-		return (NULL);
-	s = (void *)malloc(p);
-	if (!s)
-		return (NULL);
-	ft_bzero(s, p);
-	return (s);
+	count = 0;
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }
-
-/*
-int main()
-{
-
-	int *a= ft_calloc(3,sizeof(int));
-	a[0] = 1;
-	a[1] = 3;
-	free(a);
-}*/

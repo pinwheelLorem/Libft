@@ -453,3 +453,97 @@ against the code it compiles.
 
 gcc ft_putstr_fd.c -L . -lft -o hi
 
+
+## In substr function, we need to check the len of str and the size.
+if the required size is more than the len, the size takes len value. and if the len of str is less than the start, it returns NULL;
+
+## When to use typedef structure alias and when not:
+
+Recursive structures need names.
+If you use the typedef command, you can normally skip giving the struct a proper name. But in a recursive structure, you need to include a pointer to the same type. C syntax won’t let you use the typedef alias, so you need to give the struct a proper name. That’s why the struct here is called struct island.
+typedef struct island {
+ char *name;
+ char *opens;
+ char *closes;
+ struct island *next;
+} island;
+
+
+##ft_lsnew and ft_display:
+
+#include "libft.h"
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*s;
+
+	s = (t_list *)malloc(sizeof(t_list));
+	if (!s)
+		return (NULL);
+	s->content = content;
+	s->next = NULL;
+	return (s);
+}
+/*
+static void	ft_display(t_list *s)
+{
+	while (s != NULL)
+	{
+		printf("%d\n", *(int *)s->content);
+		s = s->next;
+	}
+}
+
+int main()
+{
+	t_list *N;
+	int a = 42;
+	void *p = &a;
+	N = ft_lstnew(p);
+	ft_display(N);
+	free(N);
+}*/
+
+
+Please note that we can display our struct with casting int value:
+
+while(s)
+{	
+	printf("%s\n", *(int *)s->content);
+	s = s->next;
+}
+Also, we cant set an exemple to see:
+int a = 43;
+void *p = &a (we assign to void * the adress of int);
+and then we use the function ft_lsadd(void *) to create a struct which the next value is set to NULL
+t_list N= ft_lsadd(p);
+
+and then we can use this methode to have two t_list structute and then pas the adress of the first and the second to the function ft_lsadd_front to see the result.
+
+The ALGO is simple:
+
+if both are not NULL, the next of new is set to the first structure, and this later is set to new. like swaping positons baby.
+
+##ft_lstlast:
+
+Two methods:
+
+Using the size of the structure:
+ny itersting size - -1 time. 
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	int	size;
+	int	i;
+
+	i = 1;
+	size = ft_lstsize(lst);
+	while (i < size)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (lst);
+}
+
+BY creating an inside structure, and assign it the value of the current struct-next, and one the s is NULL we return the structure->next it's stored in the created node.

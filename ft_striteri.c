@@ -6,13 +6,13 @@
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 23:47:41 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/26 00:22:11 by fgabri           ###   ########.fr       */
+/*   Updated: 2022/11/27 15:43:21 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strteri(char *s, void (*f)(unsigned int, char*))
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	unsigned int	i;
 
