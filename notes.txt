@@ -547,3 +547,9 @@ t_list	*ft_lstlast(t_list *lst)
 }
 
 BY creating an inside structure, and assign it the value of the current struct-next, and one the s is NULL we return the structure->next it's stored in the created node.
+
+
+## libft_UNI_TEST TESTER:
+
+
+It shows me to protect my strings, for exemple let the assighnement of the lenght after verifying the null value. if it's null the ft_len it's not protected! plz be aware of this!!!!w

@@ -6,7 +6,7 @@
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 22:57:12 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/21 23:07:02 by fgabri           ###   ########.fr       */
+/*   Updated: 2022/11/28 19:47:45 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	size_t	dest_len;
 	size_t	src_len;
 
-	i = 0;
-	j = 0;
-	while (dest[j] != '\0')
-		j++;
-	dest_len = j;
 	src_len = ft_strlen(src);
-	if (size == 0 || size <= dest_len)
-		return (src_len + size);
-	while (src [i] != '\0' && i < size - dest_len - 1)
+	if (!dest && !size)
+		return (src_len);
+	dest_len = ft_strlen(dest);
+	j = dest_len;
+	i = 0;
+	if (dest_len < size - 1 && size > 0)
 	{
-		dest[j] = src[i];
-		i++;
-		j++;
+		while (src[i] && dest_len + i < size - 1)
+			dest[j++] = src[i++];
+		dest[j] = '\0';
 	}
-	dest[j] = '\0';
+	if (dest_len >= size)
+		dest_len = size;
 	return (dest_len + src_len);
 }
 /*
@@ -45,4 +44,9 @@ int main()
 	printf("%ld\n",ft_strlcat(dst,src,20));
 	printf("%s\n",dst);
 	//printf("%d\n",);
+	const char src[100] = "nyan !";
+	char *dest;
+	dest = (char*)0;
+	printf("%ld\n", strlcat(((void*)0), "nyan !", 2));
+	printf("%ld\n", ft_strlcat(dest, src, 0));
 }*/

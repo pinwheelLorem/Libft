@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/27 22:53:11 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/27 23:51:08 by fgabri           ###   ########.fr       */
+/*   Created: 2022/11/28 14:35:29 by fgabri            #+#    #+#             */
+/*   Updated: 2022/11/28 14:43:22 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (new == NULL)
+	if (!f || !lst)
 		return ;
-	if (*lst == NULL)
-		*lst = new;
-	else
-		ft_lstlast(*lst)->next = new;
-}
-/*
-void    ft_lstadd_back(t_list **lst, t_list *new)
-{
-	if (!new) This method sucks in the 6 7 8 th tests idk why?!
-		return ;
-	if (*lst == NULL)
-		*lst = new;
-	else
+	while (lst)
 	{
-		while ((*lst)->next != NULL)
-			*lst = (*lst)->next;
-		(*lst)->next = new;
+		(*f)(lst->content);
+		lst = lst->next;
 	}
-}*/
+}

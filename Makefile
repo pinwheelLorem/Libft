@@ -6,7 +6,7 @@
 #    By: fgabri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 01:55:18 by fgabri            #+#    #+#              #
-#    Updated: 2022/11/27 23:17:19 by fgabri           ###   ########.fr        #
+#    Updated: 2022/11/28 20:42:25 by fgabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,31 +18,33 @@ SRCS = ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
 					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_striteri.c
 
-BNS			= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c
+BNS			= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+					ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-OBJS			= $(SRCS:.c=.o)
+OBJS	= $(SRCS:.c=.o)
 
-BNSO = $(BNS:.c=.o)
-CC				= gcc
-RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -I.
+BNSO 	= $(BNS:.c=.o)
+CC	= gcc
+RM	= rm -fr
+CFLAGS	= -Wall -Wextra -Werror -I.
+NAME	= libft.a
 
-NAME			= libft.a
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-all:			$(NAME)
+all: $(NAME)
 
-$(NAME):		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
-bonus:			$(OBJS) $(BNSO)
-				ar rcs $(NAME) $(OBJS) $(BNSO)
+bonus: $(OBJS) $(BNSO)	
+	ar rcs $(NAME) $(OBJS) $(BNSO)
 
 clean:
-				$(RM) $(OBJS) $(BNSO)
+	$(RM) $(OBJS) $(BNSO)
 
-fclean:			clean
-				$(RM) $(NAME) $(bonus)
+fclean:	clean
+	$(RM) $(NAME)
 
-re:				fclean $(NAME)
-
+re: fclean all
 .PHONY: all clean fclean re bonus

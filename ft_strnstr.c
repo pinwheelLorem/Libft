@@ -6,7 +6,7 @@
 /*   By: fgabri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 02:58:26 by fgabri            #+#    #+#             */
-/*   Updated: 2022/11/23 03:37:36 by fgabri           ###   ########.fr       */
+/*   Updated: 2022/11/28 19:52:45 by fgabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	j = 0;
 	s1 = (char *)big;
 	s2 = (char *)little;
+	if (!big && !len)
+		return (NULL);
 	if (!s2[j])
 		return (s1);
 	while (s1[i] && i < len)
@@ -65,7 +67,7 @@ int	main()
 	const char big[100] = "hello bla ju blam nk ldl blan hdi ";
 	const char little[100]= "bla";
 
-	printf("the org: %s\n", strnstr(big, little, 100));
-	printf("mine: %s", ft_strnstr(big, little, 100));
+	printf("the org: %s\n", ft_strnstr(((void*)0), "fake", 0));
+	//printf("mine: %s", ft_strnstr(big, little, 100));
 
 }*/
